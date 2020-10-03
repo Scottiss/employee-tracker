@@ -69,3 +69,49 @@ async function startPrompt() {
       });   
   }
 }
+
+function viewAllEmployees() {
+  const sql = "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name as department, role.salary, CONCAT(e.first_name, ' ', e.last_name) as manager"
+            + " FROM employee" +
+            " inner join role ON (employee.role_id = role.id)" + 
+            " inner join department on role.department_id = department.id" +
+            " left join employee as e on employee.manager_id = e.id";
+  connection.query(sql, [], (err, res, fields) => {
+    if (err) throw err;
+    console.table(res); 
+    startPrompt();
+  });
+}
+
+// dpt employees
+async function viewEmployeesByDepartment() {
+  let answer;
+  let departments;
+  try {
+    departments = await querySync(connection, "SELECT name FROM department");
+    departments = departments.map(elem => elem.name);
+    answer = await inquirer.prompt(
+      {
+        type: "list",
+        message: "Department Name: ",
+        name: "department",
+        choices: departments
+      }
+    )
+  } catch(err) {
+    throw err;
+  }
+
+  // db query
+  const sql = "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name as department, role.salary, CONCAT(e.first_name, ' ', e.last_name) as manager"
+            + " FROM employee" +
+            " inner join role ON (employee.role_id = role.id)" + 
+            " inner join department on role.department_id = department.id" +
+            " left join employee as e on employee.manager_id = e.id" +
+            " WHERE department.name = ?";
+  connection.query(sql, [answer.department], (err, res, fields) => {
+    if (err) throw err;
+    console.table(res); 
+    startPrompt();
+  });
+}
