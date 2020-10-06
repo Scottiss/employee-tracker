@@ -30,10 +30,6 @@ CREATE TABLE `employee` (
   FOREIGN KEY (`manager_id`) REFERENCES employee(`id`) ON DELETE set null
 );
 
--- will check to see if those keys exist in the role and department database 
--- if it doesn't that 
-
--- INSERT INTO employee SET first_name = "a", last_name = "b", role_id = 5, manager_id = 4;
 INSERT INTO department (`name`) VALUES ("Sales");
 INSERT INTO department (`name`) VALUES ("Legal");
 INSERT INTO department (`name`) VALUES ("Engineering");
@@ -55,3 +51,16 @@ INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Jane"
 SELECT * FROM department;
 SELECT * FROM `role`;
 SELECT * FROM employee;
+
+-- all employee view
+SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name as department, role.salary, CONCAT(e.first_name, " ", e.last_name) as manager
+  FROM employee
+  inner join `role` ON (employee.role_id = `role`.id)
+  inner join department on `role`.department_id = department.id
+  left join employee as e on employee.manager_id = e.id;
+
+SELECT * from employee left join employee as e on employee.manager_id = e.id;
+
+SELECT e.id, CONCAT(e.first_name, " ", e.last_name) as manager FROM employee inner join employee as e on employee.manager_id = e.id GROUP BY manager;
+
+select * from employee;
