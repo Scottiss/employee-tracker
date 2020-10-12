@@ -46,7 +46,7 @@ INSERT INTO `role` (title, salary, department_id) VALUES ("Lawyer", 190000, 2);
 INSERT INTO employee (first_name, last_name, role_id) VALUES ("Taylor", "Gerksy", 3); 
 INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Jeff", "Gardner", 1, 1);
 INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Steve", "Buscemi", 2, 2);
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Jane", "Doe", 4, 1);   
+INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Linden", "Wold", 4, 1);   
 
 SELECT * FROM department;
 SELECT * FROM `role`;

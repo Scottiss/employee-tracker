@@ -5,9 +5,9 @@ const questions = require("./questions");
 
 let connection = mysql.createConnection({
   host: 'localhost',
-  user: process.env.mysqlUsername,
-  password: process.env.mysqlPassword,
-  database: 'management_db'
+  user: process.env.root,
+  password: process.env.rocky14,
+  database: 'management'
 })
 
 connection.connect(err => {
